@@ -86,6 +86,8 @@ namespace OmniApp
                 listBox = { ItemsSource = chats }
             };
             menuElem.SelectionChangedEvent += OnChatSelected;
+            Style listBoxStyle = new Style(typeof(ListBoxItem));
+            listBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, new FontFamily("Georgia")));
             //menuElem.listBox.Height = 30 * menuElem.listBox.Items.Count; ;
             MenuPlace.Children.Add(menuElem);
         }
@@ -201,7 +203,7 @@ namespace OmniApp
         {
             Height = 650;
             Width = 1200;
-            bor.Width = Width;
+            bor.Width = Width;         
             bor.Height = Height;
         }
 
