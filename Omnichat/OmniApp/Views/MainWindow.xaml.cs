@@ -184,7 +184,7 @@ namespace OmniApp
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void SetWindowSize()
