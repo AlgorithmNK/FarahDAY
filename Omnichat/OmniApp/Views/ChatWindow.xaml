@@ -95,24 +95,24 @@
             </Border>
             <Border Grid.Row="3">
                 <Button x:Name="UploadButton" Height="25" Background="Transparent" HorizontalAlignment="Left" Margin="35, 10,0,0" VerticalAlignment="Top" BorderBrush="#b1c1e7" Click="UploadButton_Click_1">
-                    <Image Source="Скрепка.png"/>
+                    <Image Source="Images/Скрепка.png"/>
                 </Button>
             </Border>
             <Border Grid.Row="3">
                 <Button x:Name="CloseStatusButton" Height="25" Background="Transparent" HorizontalAlignment="Left" Margin="35, 40,0,0" VerticalAlignment="Top" BorderBrush="#b1c1e7" Click="CloseStatusButton_Click">
-                    <Image Source="cancel.png"/>
+                    <Image Source="Images/cancel.png"/>
                 </Button>
             </Border>
             <Border Grid.Row="3" Height="115">
                 <Button Height="40"  Background="Transparent" HorizontalAlignment="Right" Margin="0,15,80,0" VerticalAlignment="Top" BorderBrush="White" Click="SendButton_Click">
-                    <Image Source="ButtonSend.png"/>
+                    <Image Source="Images/ButtonSend.png"/>
                 </Button>
             </Border>
             <Button x:Name="btn2" Content="Изображение" HorizontalAlignment="Left" Margin="77,270,0,0" Grid.Row="2" VerticalAlignment="Top"  Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="19"/>
 
             <Button x:Name="btn1" Content="Файл" HorizontalAlignment="Left" Margin="77,250,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="20"/>
-            <Image x:Name="img1" Source="File.png" Width="15" Height="20" Margin="40,250,732,60" Grid.Row="2" />
-            <Image x:Name="img2" Source="Picture.png" Width="15" Height="20" Margin="46,271,738,42" Grid.Row="2"/>
+            <Image x:Name="img1" Source="Images/File.png" Width="15" Height="20" Margin="40,250,732,60" Grid.Row="2" />
+            <Image x:Name="img2" Source="Images/Picture.png" Width="15" Height="20" Margin="46,271,738,42" Grid.Row="2"/>
         </Grid>
     </Border>
 </UserControl>
