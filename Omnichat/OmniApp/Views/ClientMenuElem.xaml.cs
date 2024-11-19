@@ -28,7 +28,49 @@ namespace OmniApp
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+    //---------------------------------------ПОМЕТКА-----------------------------------------------------------
+    /*
+        public static readonly DependencyProperty SourceProperty =
+DependencyProperty.Register("Source", typeof(string), typeof(ClientMenuElem), new PropertyMetadata("Source"));
 
+    public string Source
+    {
+        get { return (string)GetValue(SourceProperty); }
+        set { SetValue(SourceProperty, value); }
+    }
+
+    public static readonly DependencyProperty IDProperty =
+        DependencyProperty.Register("ID", typeof(string), typeof(ClientMenuElem), new PropertyMetadata("ID"));
+
+    public string ID
+    {
+        get { return (string)GetValue(IDProperty); }
+        set { SetValue(IDProperty, value); }
+    }
+
+    public static readonly DependencyProperty MessageProperty =
+        DependencyProperty.Register("Message", typeof(string), typeof(ClientMenuElem), new PropertyMetadata("Message"));
+
+    public string Message
+    {
+        get { return (string)GetValue(MessageProperty); }
+        set { SetValue(MessageProperty, value); }
+    }
+
+    private void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        Sourcelabel.Content = e.NewValue.ToString();
+        IDlabel.Content = e.NewValue.ToString();
+        Textlabel.Content = e.NewValue.ToString();
+    }
+
+    private void UpdateLabel()
+    {
+        Sourcelabel.Content = Source;
+        IDlabel.Content = ID;
+        Textlabel.Content = Message;
+    }
+    */
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(ClientMenuElem), new PropertyMetadata("label"));
 
