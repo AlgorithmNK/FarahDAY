@@ -11,16 +11,14 @@ namespace OmniApp
     /// <summary>
     /// Логика взаимодействия для App.xaml
     /// </summary>
-    /*public static class GlobalSettings
-    {
-        public static string ServerUrl { get; set; }
-        public static string TgToken { get; set; }
-        public static string VkToken { get; set; }
-        public static string MailAddress { get; set; }
-        public static string MailPassword { get; set; }
-    }*/
+
     public partial class App : Application
     {
+        protected override async void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            await ServerConnection.Client.ConnectAsync();
 
+        }
     }
 }

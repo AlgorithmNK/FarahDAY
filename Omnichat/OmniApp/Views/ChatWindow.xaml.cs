@@ -37,8 +37,6 @@ namespace OmniApp
             this.chat = chat;
             InitializeComponent();
             IsHidden();
-            LoadMessagesAsync();
-            ScrollToBottom();
             this.Loaded += OnWindowLoaded;
         }
         public ChatWindow() 
@@ -46,40 +44,23 @@ namespace OmniApp
             InitializeComponent();
             IsHidden();
         }
-        private async void OnWindowLoaded(object sender, RoutedEventArgs e)
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Окно загружено");
-            await InitializeSocketAsync();
+            LoadMessages();
+            SubscribeToNewMessages();
+            ScrollToBottom();
         }
-
-        private SocketIOClient.SocketIO client;
-        private async Task InitializeSocketAsync()
+        private void SubscribeToNewMessages()
         {
-            client = new SocketIOClient.SocketIO(Properties.Settings.Default.ServerUrl);
-            client.Options.AutoUpgrade = false;
-            Console.WriteLine("Клиент создан");
-
-            client.On("connection_ack", response =>
+            ServerConnection.Client.On("new_message", response =>
             {
-                var jsonData = response.GetValue<JsonElement>();
-                string message = jsonData.GetProperty("message").GetString();
-                Console.WriteLine("Соединение подтверждено сервером: " + message);
-            });
-            client.OnConnected += (s, e) =>
-            {
-                Console.WriteLine(client.Connected);
-            };
-            client.On("new_message", response =>
-            {
-                Console.WriteLine(response.ToString());
                 var newMessage = JsonConvert.DeserializeObject<List<Message>>(response.ToString())[0];
-                Console.WriteLine($"newMessage: {newMessage.Chat_id}, {newMessage.Chat_sourсe}, {newMessage.Text}");
+                //Console.WriteLine($"newMessage: {newMessage.Chat_id}, {newMessage.Chat_sourсe}, {newMessage.Text}");
                 if (newMessage.Chat_id == chat.Chat_id && newMessage.Chat_sourсe == chat.Source)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         Messages.Add(newMessage);
-                        Console.WriteLine("Добавлено новое сообщение");
                         if (Messages.Count > 0)
                         {
                             ChatName.Text = Messages[0].Source;
@@ -87,28 +68,29 @@ namespace OmniApp
                     });
                 }
             });
-            await client.ConnectAsync();
+            
         }
-        private async Task LoadMessagesAsync()
+        private void LoadMessages()
         {
-            var messages = await ServerConnection.GetChatMessages(chat.Source, chat.Chat_id);
-            Messages = new ObservableCollection<Message>(messages ?? new List<Message>());
-            Application.Current.Dispatcher.Invoke(() =>
+            ServerConnection.Client.EmitAsync("get_chat_messages", chat.Source, chat.Chat_id);
+            ServerConnection.Client.On("get_chat_messages_response", response => 
             {
-                MessagesList.ItemsSource = Messages;
-                if (Messages.Count > 0)
+                var messages = JsonConvert.DeserializeObject<List<List<Message>>>(response.ToString())[0];
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ChatName.Text = Messages[0].Source;
-                }
+                    Messages = new ObservableCollection<Message>(messages ?? new List<Message>());
+                    MessagesList.ItemsSource = Messages;
+                    if (Messages.Count > 0)
+                    {
+                        ChatName.Text = Messages[0].Source;
+                    }
+                });
             });
         }
 
-        private async void On_Closing(object sender, RoutedEventArgs e)
+        private void On_Closing(object sender, RoutedEventArgs e)
         {
-            if (client != null)
-            {
-                await client.DisconnectAsync();
-            }
+
         }
 
         public void IsHidden()
@@ -161,7 +143,7 @@ namespace OmniApp
             }
             isOpen = !isOpen;
         }
-        private async void SendButton_Click(object sender, RoutedEventArgs e)
+        private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(textbox.Text))
             {
@@ -169,12 +151,12 @@ namespace OmniApp
                 Messages.Add(message);
                 textbox.Clear();
                 ScrollToBottom();
-                await ServerConnection.SendMessage(chat.Source, chat.Chat_id, message.Text);
+                ServerConnection.Client.EmitAsync("send_message", chat.Source, chat.Chat_id, message.Text);
             }
         }
-        private async void CloseStatusButton_Click(object sender, RoutedEventArgs e)
+        private void CloseStatusButton_Click(object sender, RoutedEventArgs e)
         {
-            await ServerConnection.CloseChat(chat.Source, chat.Chat_id);
+            ServerConnection.Client.EmitAsync("close_chat", chat.Source, chat.Chat_id);
         }
     }
 }

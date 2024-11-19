@@ -73,10 +73,8 @@ class DBManager():
         data = []
         for row in rows:
             data.append(dict(zip(column_names, row)))
-
-        json_data = json.dumps(data, indent=4)
         conn.close()
-        return json_data
+        return data
 
     def get_chat_messages(self, chat_source, chat_id):
         conn = sqlite3.connect(self.db_name)
@@ -88,8 +86,7 @@ class DBManager():
         data = []
         for row in rows:
             data.append(dict(zip(column_names, row)))
-        json_data = json.dumps(data, indent=4)
         conn.close()
-        return json_data
+        return data
 
         
