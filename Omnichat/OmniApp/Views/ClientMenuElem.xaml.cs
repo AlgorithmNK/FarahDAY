@@ -28,7 +28,7 @@ namespace OmniApp
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-    //---------------------------------------ПОМЕТКА-----------------------------------------------------------
+
     
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(ClientMenuElem), new PropertyMetadata("label"));
