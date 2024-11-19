@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Timers;
+using Newtonsoft.Json;
+using Microsoft.Win32;
+using System.IO;
 
 namespace OmniApp
 {
@@ -32,39 +35,33 @@ namespace OmniApp
         public MainWindow()
         {
             InitializeComponent();
-            CreateMenuElements();
+            this.Loaded += OnWindowLoaded;
             UserAccount user = new UserAccount();
             ProfilPlace.Children.Add(user);
             HideElements();
+        }
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
             ServerConnection.RunBots();
+            ChatUpdating();
         }
-
-
-        private Timer _updateTimer;
-
-        private async void CreateMenuElements()
+        private void ChatUpdating()
         {
-            _updateTimer = new Timer(10000);
-            _updateTimer.Elapsed += async (sender, e) => await UpdateChats();
-            _updateTimer.AutoReset = true;
-            _updateTimer.Enabled = true;
-
-            await UpdateChats();
-        }
-
-        private async Task UpdateChats()
-        {
-            var chats = await ServerConnection.GetChats();
-            Chats = new ObservableCollection<Chat>(chats ?? new List<Chat>());
-
-            var AwaitingChats = Chats.Where(chat => chat.Status == "awaiting");
-            var OpenChats = Chats.Where(chat => chat.Status == "open");
-            var ClosedChats = Chats.Where(chat => chat.Status == "closed");
-            var OfflineChats = Chats.Where(chat => chat.Status == "offline");
-
-            Application.Current.Dispatcher.Invoke(() =>
+            ServerConnection.Client.EmitAsync("get_chats");
+            ServerConnection.Client.On("get_chats_response", response => 
             {
-                UpdateMenuElements(AwaitingChats, OpenChats, ClosedChats, OfflineChats);
+                Console.WriteLine(response.ToString());
+                var chats = JsonConvert.DeserializeObject<List<List<Chat>>>(response.ToString())[0];
+                Chats = new ObservableCollection<Chat>(chats ?? new List<Chat>());
+                var AwaitingChats = Chats.Where(chat => chat.Status == "awaiting");
+                var OpenChats = Chats.Where(chat => chat.Status == "open");
+                var ClosedChats = Chats.Where(chat => chat.Status == "closed");
+                var OfflineChats = Chats.Where(chat => chat.Status == "offline");
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    UpdateMenuElements(AwaitingChats, OpenChats, ClosedChats, OfflineChats);
+                });
+
             });
         }
 
@@ -74,7 +71,58 @@ namespace OmniApp
             AddMenuElement("Ожидают ответа", awaitingChats);
             AddMenuElement("В диалоге", openChats);
             AddMenuElement("Закрытые диалоги", closedChats);
-            AddMenuElement("Офлайн-обращения", offlineChats);
+            var offlineMenuElem = new ClientMenuElem
+            {
+                Text = "Офлайн-обращения",
+                listBox = { ItemsSource = offlineChats }
+            };
+
+            offlineMenuElem.SelectionChangedEvent += OnChatSelected;
+
+            Button addButton = new Button
+            {
+                Content = "+",
+                Width = 30,
+                Height = 30,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
+            addButton.Click += AddButton_Click; 
+
+            Grid offlineGrid = new Grid();
+            offlineGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
+            offlineGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0, GridUnitType.Auto) });
+
+            Grid.SetColumn(offlineMenuElem, 0);
+            Grid.SetColumn(addButton, 1);
+            offlineGrid.Children.Add(offlineMenuElem);
+            offlineGrid.Children.Add(addButton);
+
+            MenuPlace.Children.Add(offlineGrid);
+
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                    {
+                        string fileContent = sr.ReadToEnd();
+                        var newOfflineChat = new Chat("offline", openFileDialog.FileName, "offline");
+                        var newOfflineMessage = new Message("offline", newOfflineChat.Chat_id, newOfflineChat.Source, fileContent);
+                        ServerConnection.Client.EmitAsync("save_user_offline", newOfflineChat.Source, newOfflineChat.Chat_id, newOfflineMessage.Text);
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при чтении файла: " + ex.Message);
+                }
+            }
         }
 
         private void AddMenuElement(string header, IEnumerable<Chat> chats)
@@ -87,8 +135,8 @@ namespace OmniApp
             menuElem.SelectionChangedEvent += OnChatSelected;
             Style listBoxStyle = new Style(typeof(ListBoxItem));
             listBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, new FontFamily("Georgia")));
-            //menuElem.listBox.Height = 30 * menuElem.listBox.Items.Count; ;
             MenuPlace.Children.Add(menuElem);
+
         }
 
 
@@ -97,23 +145,16 @@ namespace OmniApp
             Console.WriteLine($"Выбран чат с ID: {selectedChat.Chat_id} в MainWindow");
             WithoutChat.Visibility = Visibility.Collapsed;
             SettingWindow.Visibility = Visibility.Collapsed;
-            /*if (ChatWindow.Parent is Panel parent)
-            {
-                parent.Children.Remove(ChatWindow);
-            }
-            ChatWindow newChatWindow = new ChatWindow(selectedChat)
-            {
-                Visibility = Visibility.Visible
-            };
-            Grid.SetRow(newChatWindow, 1);
-            Grid.SetColumn(newChatWindow, 2);
-            MainGrid.Children.Add(newChatWindow);*/
             MainGrid.Children.Remove(ChatWindow);
             ChatWindow = new ChatWindow(selectedChat);
             ChatWindow.Visibility = Visibility.Visible;
             Grid.SetRow(ChatWindow, 1);
             Grid.SetColumn(ChatWindow, 2);
             MainGrid.Children.Add(ChatWindow);
+            if (sender is ClientMenuElem menuElem)
+            {
+                menuElem.listBox.SelectedItem = null;
+            }
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -172,15 +213,6 @@ namespace OmniApp
         {
             SettingWindow.Visibility = Visibility.Visible;
             ChatWindow.Visibility = Visibility.Collapsed;
-        }
-        private void ChatWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ChatWindow_Loaded_1(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)

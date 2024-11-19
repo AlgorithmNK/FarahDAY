@@ -83,7 +83,7 @@
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource CustomListBoxItemStyle}"/>
                     </ListBox.ItemContainerStyle>
-                    
+
                 </ListBox>
             </ScrollViewer>
 
@@ -107,7 +107,15 @@
                 </Button>
             </Border>
             <Border Grid.Row="3" Height="115">
-                <Button Height="40"  Background="Transparent" HorizontalAlignment="Right" Margin="0,15,80,0" VerticalAlignment="Top" BorderBrush="White" Click="SendButton_Click">
+                <Button Height="40"  Background="Transparent" HorizontalAlignment="Right" Margin="0,15,84,0" VerticalAlignment="Top" BorderBrush="White" Click="SendButton_Click" RenderTransformOrigin="0.5,0.5" Width="38">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="-1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
                     <Image Source="ButtonSend.png"/>
                 </Button>
             </Border>

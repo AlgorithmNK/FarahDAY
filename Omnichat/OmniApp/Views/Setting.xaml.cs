@@ -30,7 +30,7 @@ namespace OmniApp
             PasswordBoxMailPassword.Password = Properties.Settings.Default.MailPassword;
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.ServerUrl = TextBoxUrl.Text;
             Properties.Settings.Default.TgToken = PasswordBoxTgToken.Password;
@@ -39,7 +39,7 @@ namespace OmniApp
             Properties.Settings.Default.MailPassword = PasswordBoxMailPassword.Password;
             Properties.Settings.Default.Save();
             this.Visibility = Visibility.Collapsed;
-            await ServerConnection.RunBots();
+            ServerConnection.RunBots();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

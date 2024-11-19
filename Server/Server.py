@@ -1,24 +1,16 @@
+import threading, requests, sys, smtplib, email, os, subprocess
 from flask import Flask, request, jsonify
-import threading
-import requests
+from flask_socketio import SocketIO, emit
+from engineio.async_drivers import gevent
+from email.mime.text import MIMEText
+from email.header import decode_header
+import vk_api
 from dbmanager import DBManager
-import sys
 sys.path.append('/task_classifier')
 sys.path.append('/text_generation')
 from task_classifier.task_classifier import TaskClassifier
 from text_generation.text_generator import TextGenerator
-import vk_api
-from flask_socketio import SocketIO, emit
-from engineio.async_drivers import gevent
-import smtplib
-import email
-from email.mime.text import MIMEText
-from email.header import decode_header
-import subprocess
-import os
 
-#script_dir = os.path.dirname(os.path.abspath(__file__))
-#os.chdir(script_dir)
 
 HOST = '127.0.0.1'
 PORT = '5000'
@@ -43,11 +35,14 @@ def save_user(chat_source, chat_id, name, message):
     bot_name = 'system'
     if (dbmanager.is_chat_exists(chat_source, chat_id)):
         dbmanager.add_message(name, chat_source, chat_id, message)
+        if chat_source == 'offline':
+            dbmanager.change_status(chat_source, chat_id, 'offline')
+        else:
+            dbmanager.change_status(chat_source, chat_id, 'awaiting')
         socketio.emit(
             'new_message', 
             {'source': name, 'chat_source': chat_source, 'chat_id': chat_id, 'text': message}
         )
-        dbmanager.change_status(chat_source, chat_id, 'awaiting')
     else:
         message_type = taskclassifier.get_predict(message)
         bot_answer = textgenerator.get_response(message)
@@ -61,16 +56,15 @@ def save_user(chat_source, chat_id, name, message):
         dbmanager.add_chat_type(chat_source, chat_id, message_type)
         if (len(bot_answer) > 0):
             dbmanager.add_message(bot_name, chat_source, chat_id, bot_answer)
-            dbmanager.change_status(chat_source, chat_id, 'open')
+            if chat_source == 'offline':
+                dbmanager.change_status(chat_source, chat_id, 'offline')
+            else:
+                dbmanager.change_status(chat_source, chat_id, 'open')
             socketio.emit(
                 'new_message', 
                 {'source': bot_name, 'chat_source': chat_source, 'chat_id': chat_id, 'text': bot_answer}
             )
-
-@socketio.on('connect')
-def handle_connect():
-    print(f"Новое соединение установлено: {request.sid}")  
-    emit('connection_ack', {'message': 'Соединение установлено'}, room=request.sid)
+        get_chats()
 
 @app.route('/telegram', methods=['POST'])
 def save_user_telegram():
@@ -127,26 +121,27 @@ def send_user_gmail(chat_id, text):
         server.login(EMAIL_ADDRESS, APP_PASSWORD)
         server.sendmail(EMAIL_ADDRESS, chat_id, msg.as_string())
 
-@app.route('/get_chats', methods=['GET'])
+@socketio.on('save_user_offline')
+def handle_ave_user_offline(chat_source, chat_id, message):
+    name = ''
+    save_user(chat_source, chat_id, name, message)
+
+@socketio.on('get_chats')
+def handle_get_chats():
+    get_chats()
+
 def get_chats():
     res_data = dbmanager.get_chats()
-    return res_data
+    emit('get_chats_response', res_data)
 
-@app.route('/get_chat_messages', methods=['POST'])
-def get_chat_messages():
-    data = request.json
-    chat_source = data['chat_source']
-    chat_id = data['chat_id']
+@socketio.on('get_chat_messages')
+def handle_get_chat_messages(chat_source, chat_id):
     res_data = dbmanager.get_chat_messages(chat_source, chat_id)
-    return res_data
+    emit('get_chat_messages_response', res_data)
 
-@app.route('/send_message', methods=['POST'])
-def send_message():
-    data = request.json
+@socketio.on('send_message')
+def handle_send_message(chat_source, chat_id, message):
     source = 'user'
-    chat_source = data['chat_source']
-    chat_id = data['chat_id']
-    message = data['message']
     if (len(message) > 0):
         dbmanager.add_message(source, chat_source, chat_id, message)
         dbmanager.change_status(chat_source, chat_id, 'awaiting')
@@ -155,29 +150,21 @@ def send_message():
         elif chat_source  == 'vk':
             send_user_vk(chat_id, message)
         elif chat_source  == 'mail':
-            send_user_gmail(chat_id, message)
-    res_data = jsonify({'message': 'Данные успешно сохранены'})
-    return res_data
+            send_user_gmail(chat_id, message)      
 
-@app.route('/close_chat', methods=['POST'])
-def close_chat():
-    data = request.json
-    chat_source = data['chat_source']
-    chat_id = data['chat_id']
+@socketio.on('close_chat')
+def handle_close_chat(chat_source, chat_id):
     dbmanager.change_status(chat_source, chat_id, 'closed')
-    res_data = jsonify({'message': 'Данные успешно сохранены'})
-    return res_data
 
 processes = []
 
-@app.route('/run_bots', methods=['POST'])
-def run_bots():
+@socketio.on('run_bots')
+def handle_run_bots(tg_token, vk_token, email_address, email_password):
     global processes, tg_bot_token, vk_bot_token, EMAIL_ADDRESS, APP_PASSWORD
-    data = request.json
-    tg_bot_token = data['tg_token']
-    vk_bot_token = data['vk_token']
-    EMAIL_ADDRESS = data['email_address']
-    APP_PASSWORD = data['email_password']
+    tg_bot_token = tg_token
+    vk_bot_token = vk_token
+    EMAIL_ADDRESS = email_address
+    APP_PASSWORD = email_password
     for process in processes:
         process.terminate()  
         process.wait()      
@@ -187,9 +174,6 @@ def run_bots():
         processes.append(subprocess.Popen(['python', 'VkBot.py', vk_bot_token, URL]))
     if len(EMAIL_ADDRESS) > 0 and len(APP_PASSWORD) > 0:
         processes.append(subprocess.Popen(['python', 'GmailBot.py', EMAIL_ADDRESS, APP_PASSWORD, URL]))
-    res_data = jsonify({'message': 'Боты запущены'})
-    return res_data
-
 
 if __name__ == '__main__':
     dbmanager.create_db()
