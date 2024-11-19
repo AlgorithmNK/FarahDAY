@@ -30,6 +30,14 @@
                 </Button>
 
                 <!-- Метка с текстом -->
+                /*
+                <Label x:Name="IDlabel" Content="{Binding ID, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="Sourcelabel" Content="{Binding Source, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       HorizontalAlignment="Left" Margin="40,-10,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="Textlabel" Content="{Binding Message, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Center"/>
+*/
                 <Label x:Name="label" Content="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Center" RenderTransformOrigin="2.44,0.52"/>
             </Grid>
