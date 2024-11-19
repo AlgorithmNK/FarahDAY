@@ -18,7 +18,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="ButtonProfil" Background="#b1c1e7" BorderBrush="Transparent" Content="Имя пользователя   V" Click="Button_Click" FontSize="15" Grid.ColumnSpan="2" Margin="10,8,24,5"/>
-                <Image Source="ForProfil.png" RenderTransformOrigin="0.303,0.5" Margin="27,8,0,5" HorizontalAlignment="Left" Width="28">
+                <Image Source="Images/ForProfil.png" RenderTransformOrigin="0.303,0.5" Margin="27,8,0,5" HorizontalAlignment="Left" Width="28">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
