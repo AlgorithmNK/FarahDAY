@@ -59,7 +59,7 @@
                         <StackPanel VerticalAlignment="Top" Name="MenuPlace">
                         </StackPanel>
                     </ScrollViewer>
-                    <Image Source="Images/Fon.png" RenderTransformOrigin="0.036,-1.434" Margin="-51,0,-878,0" Name="img" Grid.RowSpan="5">
+                    <Image Source="/Assets/Images/Fon.png" RenderTransformOrigin="0.036,-1.434" Margin="-51,0,-878,0" Name="img" Grid.RowSpan="5">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform ScaleX="-1"/>
@@ -87,7 +87,7 @@
 
                 </Grid>
                 <Button Grid.Column="1" HorizontalAlignment="Left" Margin="60,10,0,5" VerticalAlignment="Top" Background="White" BorderBrush="White">
-                    <Image Source="Images/Messages.png"></Image>
+                    <Image Source="/Assets/Images/Messages.png"></Image>
                 </Button>
                 <Grid x:Name="grid1" Grid.Column="0" Grid.Row="1" Background="#5676c0" Margin="0,0,0,-42">
 
