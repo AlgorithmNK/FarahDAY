@@ -26,6 +26,7 @@ class DBManager():
             chat_id TEXT NOT NULL,
             text TEXT NOT NULL,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            photo TEXT,
             FOREIGN KEY (chat_source, chat_id) REFERENCES chats(source, chat_id)
         )
         ''')
@@ -41,11 +42,11 @@ class DBManager():
         conn.close()
         return row is not None
 
-    def add_message(self, source, chat_source, chat_id, text):
+    def add_message(self, source, chat_source, chat_id, text, photo='None'):
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         cursor.execute('INSERT OR IGNORE INTO chats (source, chat_id, status) VALUES (?, ?, ?)', (chat_source, chat_id, 'awaiting'))
-        cursor.execute('INSERT INTO messages (source, chat_source, chat_id, text) VALUES (?, ?, ?, ?)', (source, chat_source, chat_id, text))
+        cursor.execute('INSERT INTO messages (source, chat_source, chat_id, text, photo) VALUES (?, ?, ?, ?, ?)', (source, chat_source, chat_id, text, photo))
         conn.commit()
         conn.close()
 
@@ -62,7 +63,6 @@ class DBManager():
         cursor.execute('UPDATE chats SET status = ? WHERE source = ? AND chat_id = ?', (status, source, chat_id))
         conn.commit()
         conn.close()
-
 
     def get_chats(self):
         conn = sqlite3.connect(self.db_name)

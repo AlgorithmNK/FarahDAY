@@ -35,6 +35,11 @@ namespace OmniApp
         public MainWindow()
         {
             InitializeComponent();
+<<<<<<< Updated upstream
+=======
+            UserAccount user = new UserAccount(userName);
+            user.UserName = userName;
+>>>>>>> Stashed changes
             this.Loaded += OnWindowLoaded;
             UserAccount user = new UserAccount();
             ProfilPlace.Children.Add(user);
@@ -71,34 +76,19 @@ namespace OmniApp
             AddMenuElement("Ожидают ответа", awaitingChats);
             AddMenuElement("В диалоге", openChats);
             AddMenuElement("Закрытые диалоги", closedChats);
-            var offlineMenuElem = new ClientMenuElem
-            {
-                Text = "Офлайн-обращения",
-                listBox = { ItemsSource = offlineChats }
-            };
-
-            offlineMenuElem.SelectionChangedEvent += OnChatSelected;
-
+            AddMenuElement("Офлайн-обращения", offlineChats);
+            Grid grid = new Grid();
+            grid.HorizontalAlignment = HorizontalAlignment.Right;
             Button addButton = new Button
             {
                 Content = "+",
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(0, 0, 0, 0)
+                Margin = new Thickness(0, 0, 7, 0)
             };
-            addButton.Click += AddButton_Click; 
-
-            Grid offlineGrid = new Grid();
-            offlineGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
-            offlineGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0, GridUnitType.Auto) });
-
-            Grid.SetColumn(offlineMenuElem, 0);
-            Grid.SetColumn(addButton, 1);
-            offlineGrid.Children.Add(offlineMenuElem);
-            offlineGrid.Children.Add(addButton);
-
-            MenuPlace.Children.Add(offlineGrid);
-
+            addButton.Click += AddButton_Click;
+            grid.Children.Add(addButton);
+            MenuPlace.Children.Add(grid);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

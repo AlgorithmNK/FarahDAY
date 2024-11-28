@@ -33,8 +33,8 @@
     <Border Background="#b1c1e7" CornerRadius="40" Height="570">
         <Grid Height="570" VerticalAlignment="Bottom">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="120"/>
             </Grid.RowDefinitions>
@@ -43,15 +43,16 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch">
                 <TextBlock x:Name="ChatName" Text="Имя пользователя(клиента)"
-                           FontSize="25"
+                           FontSize="20"
                            HorizontalAlignment="Center"
-                           Margin="35, 15, 10, 10"
+                           Margin="35, 5, 10, 10"
                            VerticalAlignment="Center" RenderTransformOrigin="0.504,2.009"/>
             </StackPanel>
             <Button x:Name="CloseButton" Width="150" HorizontalAlignment="Right"
                     Background="#b1c1e7"
                     Content="Закрыть X"
-                    FontSize="25" Click="CloseButton_Click">
+                    FontSize="25" Click="CloseButton_Click"
+                    Visibility="Collapsed">
             </Button>
 
             <ScrollViewer x:Name="scrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -63,21 +64,26 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="5" 
-                                    Padding="10" 
-                                    CornerRadius="10" 
-                                    BorderBrush="LightGray" 
-                                    BorderThickness="1"
-                                    Background="{Binding Source, Converter={StaticResource MessageSourceToBackgroundConverter}}">
-                                <TextBox Text="{Binding Text}" 
-                                         IsReadOnly="True" 
-                                         TextWrapping="Wrap" 
-                                         HorizontalAlignment="Stretch" 
-                                         MaxWidth="700"
-                                         Background="Transparent" 
-                                         BorderThickness="0"
-                                         />
-                            </Border>
+                            <StackPanel>
+                                <Border Margin="5" 
+                        Padding="10" 
+                        CornerRadius="10" 
+                        BorderBrush="LightGray" 
+                        BorderThickness="1"
+                        Background="{Binding Source, Converter={StaticResource MessageSourceToBackgroundConverter}}">
+                                    <TextBox Text="{Binding Text}" 
+                             IsReadOnly="True" 
+                             TextWrapping="Wrap" 
+                             HorizontalAlignment="Stretch" 
+                             MaxWidth="700"
+                             Background="Transparent" 
+                             BorderThickness="0" />
+                                </Border>
+                                <Image Source="{Binding Photo}" 
+                       HorizontalAlignment="Center" 
+                       MaxWidth="700"
+                       Stretch="Uniform" />
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>
@@ -87,41 +93,44 @@
                 </ListBox>
             </ScrollViewer>
 
-            <Border Grid.Row="3">
+            <Border Grid.Row="3" RenderTransformOrigin="0.503,0.397" Margin="0,0,0,-14">
                 <TextBox x:Name="textbox" Background="White"
-                         Text="          Сообщение" GotFocus="textbox_GotFocus"
+                         Text="          Написать сообщение..." GotFocus="textbox_GotFocus"
                          FontSize="15"
                          Width="750"
                          Height="70"
-                         HorizontalAlignment="Center" Margin="0,10,0,47">
+                         HorizontalAlignment="Center" Margin="0,10,0,47"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True">
+
                 </TextBox>
             </Border>
             <Border Grid.Row="3">
                 <Button x:Name="UploadButton" Height="25" Background="Transparent" HorizontalAlignment="Left" Margin="35, 10,0,0" VerticalAlignment="Top" BorderBrush="#b1c1e7" Click="UploadButton_Click_1">
-                    <Image Source="Скрепка.png"/>
+                    <Image Source="Images/Скрепка.png"/>
                 </Button>
             </Border>
             <Border Grid.Row="3">
                 <Button x:Name="CloseStatusButton" Height="25" Background="Transparent" HorizontalAlignment="Left" Margin="35, 40,0,0" VerticalAlignment="Top" BorderBrush="#b1c1e7" Click="CloseStatusButton_Click">
-                    <Image Source="cancel.png"/>
+                    <Image Source="Images/cancel.png"/>
                 </Button>
             </Border>
-            <Border Grid.Row="3" Height="115">
+            <Border Grid.Row="3" Margin="667,10,-16,40" RenderTransformOrigin="0.503,0.47">
                 <Button Height="40"  Background="Transparent" HorizontalAlignment="Right" Margin="0,15,84,0" VerticalAlignment="Top" BorderBrush="White" Click="SendButton_Click" RenderTransformOrigin="0.5,0.5" Width="38">
                     <Button.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleX="-1"/>
+                            <ScaleTransform ScaleX="1"/>
                             <SkewTransform/>
                             <RotateTransform/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Button.RenderTransform>
-                    <Image Source="ButtonSend.png"/>
+                    <Image Source="Images/ButtonSend.png"/>
                 </Button>
             </Border>
-            <Button x:Name="btn2" Content="Изображение" HorizontalAlignment="Left" Margin="77,270,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="19"/>
+            <Button x:Name="btn2" Content="Изображение" HorizontalAlignment="Left" Margin="10,346,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="19"/>
 
-            <Button x:Name="btn1" Content="Файл" HorizontalAlignment="Left" Margin="77,250,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="20"/>
+            <Button x:Name="btn1" Content="Файл" HorizontalAlignment="Left" Margin="10,326,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="20"/>
             <Image x:Name="img1" Source="File.png" Width="15" Height="20" Margin="40,250,732,60" Grid.Row="2" />
             <Image x:Name="img2" Source="Picture.png" Width="15" Height="20" Margin="46,271,738,42" Grid.Row="2"/>
         </Grid>

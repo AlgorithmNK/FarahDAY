@@ -4,29 +4,36 @@ import threading
 import sys
 
 bot = telebot.TeleBot(sys.argv[1])
+url = sys.argv[2]
 
-#Стартовая команла
 @bot.message_handler(commands=['start', 'help'])
 def main(message):
     bot.send_message(message.chat.id, text='Здравствуйте, чем могу помочь?')
 
-#Реакция бота на обычные сообщения
-@bot.message_handler(func=lambda message: True)
+@bot.message_handler(content_types=['text', 'photo'])
 def answer(message):
     user_data = {
         'Имя': message.from_user.first_name,
         'Фамилия': message.from_user.last_name,
         'Сообщение': message.text,
-        'ID чата': message.chat.id
-    } #Получаем данные пользователя
-    # Создаем отдельный поток для отправки данных на сервер
+        'ID чата': message.chat.id,
+        'Фото': None
+    } 
+    if message.content_type == 'photo':
+        photo = message.photo[-1]
+        file_info = bot.get_file(photo.file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
+        photo_path = f"{url}/images/{photo.file_id}.jpg"
+        with open(f'images/{photo.file_id}.jpg', "wb") as file:
+            file.write(downloaded_file)
+        user_data['Фото'] = photo_path
+    print(user_data)
     t = threading.Thread(target=send_data, args=(user_data,))
     t.start()
 
 def send_data(user_data):
-    # Отправляем данные на сервер
     try:
-        response = requests.post(sys.argv[2] + '/telegram', json=user_data)
+        response = requests.post(url + '/telegram', json=user_data)
         if response.status_code == 200:
             print("Данные успешно отправлены на сервер.")
         else:

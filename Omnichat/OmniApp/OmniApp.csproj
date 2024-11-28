@@ -104,6 +104,9 @@
     </ApplicationDefinition>
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Views\Authorization.xaml.cs">
+      <DependentUpon>Authorization.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExitAccount.xaml.cs">
       <DependentUpon>ExitAccount.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
     <Compile Include="Views\WithoutChat.xaml.cs">
       <DependentUpon>WithoutChat.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Authorization.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ChatWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +228,24 @@
   <ItemGroup>
     <Resource Include="Assets\Images\cancel.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Views\Images\ButtonSend.png" />
+    <Resource Include="Views\Images\cancel.png" />
+    <Resource Include="Views\Images\Circle Blue.png" />
+    <Resource Include="Views\Images\Close.png" />
+    <Resource Include="Views\Images\Close2.png" />
+    <Resource Include="Views\Images\file.ico" />
+    <Resource Include="Views\Images\File.png" />
+    <Resource Include="Views\Images\Fon.png" />
+    <Resource Include="Views\Images\ForProfil.png" />
+    <Resource Include="Views\Images\Messages.png" />
+    <Resource Include="Views\Images\Picture.png" />
+    <Resource Include="Views\Images\Скрепка.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Close.png" />
+    <Resource Include="Assets\Images\Close2.png" />
+    <Resource Include="Assets\Images\file.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

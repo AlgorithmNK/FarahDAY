@@ -12,13 +12,14 @@ namespace OmniApp
         public string Chat_sourсe { get; set; }
         public string Chat_id { get; set; }
         public string Text { get; set; }
-
-        public Message(string source, string chat_source, string chat_id, string text)
+        public string Photo { get; set; }
+        public Message(string source, string chat_source, string chat_id, string text, string photo = "None")
         {
             Source = source;
             Chat_sourсe = chat_source;
             Chat_id = chat_id;
             Text = text;
+            Photo = photo;
         }
     }
 }

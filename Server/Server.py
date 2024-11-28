@@ -1,5 +1,5 @@
 import threading, requests, sys, smtplib, email, os, subprocess
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_socketio import SocketIO, emit
 from engineio.async_drivers import gevent
 from email.mime.text import MIMEText
@@ -17,6 +17,7 @@ PORT = '5000'
 if (len(sys.argv) > 1):
     HOST, PORT = sys.argv[1].split(":")
 URL = 'http://' + HOST + ':' + PORT
+IMAGE_FOLDER = os.path.join(os.getcwd(), 'images')
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode='gevent')
 users_data = []
@@ -31,28 +32,34 @@ SMTP_PORT = 587
 EMAIL_ADDRESS = ''
 APP_PASSWORD = ''
 
-def save_user(chat_source, chat_id, name, message):
+
+@app.route('/images/<filename>')
+def get_image(filename):
+    return send_from_directory(IMAGE_FOLDER, filename)
+
+def save_user(chat_source, chat_id, name, message, photo='None'):
     bot_name = 'system'
     if (dbmanager.is_chat_exists(chat_source, chat_id)):
-        dbmanager.add_message(name, chat_source, chat_id, message)
+        dbmanager.add_message(name, chat_source, chat_id, message, photo)
         if chat_source == 'offline':
             dbmanager.change_status(chat_source, chat_id, 'offline')
         else:
             dbmanager.change_status(chat_source, chat_id, 'awaiting')
         socketio.emit(
             'new_message', 
-            {'source': name, 'chat_source': chat_source, 'chat_id': chat_id, 'text': message}
+            {'source': name, 'chat_source': chat_source, 'chat_id': chat_id, 'text': message, 'photo': photo}
         )
     else:
-        message_type = taskclassifier.get_predict(message)
-        bot_answer = textgenerator.get_response(message)
+        if (len(message) > 0):
+            message_type = taskclassifier.get_predict(message)
+            bot_answer = textgenerator.get_response(message)
         if chat_source == 'tg':
             send_user_telegram(chat_id, bot_answer)
         elif chat_source == 'vk':
             send_user_vk(chat_id, bot_answer)
         elif chat_source == 'mail':
             send_user_gmail(chat_id, bot_answer)
-        dbmanager.add_message(name, chat_source, chat_id, message)
+        dbmanager.add_message(name, chat_source, chat_id, message, photo)
         dbmanager.add_chat_type(chat_source, chat_id, message_type)
         if (len(bot_answer) > 0):
             dbmanager.add_message(bot_name, chat_source, chat_id, bot_answer)
@@ -73,7 +80,8 @@ def save_user_telegram():
     chat_id = str(data['ID чата'])
     name = f'{str(data['Имя'])} {str(data['Фамилия'])}'
     message = str(data['Сообщение'])
-    save_user(chat_source, chat_id, name, message)
+    photo = str(data['Фото'])
+    save_user(chat_source, chat_id, name, message, photo)
     return jsonify({'message': 'Данные успешно сохранены'})
 
 def send_user_telegram(chat_id, message_bot):
@@ -82,10 +90,6 @@ def send_user_telegram(chat_id, message_bot):
         'text': message_bot
     }
     response = requests.post(f'https://api.telegram.org/bot{tg_bot_token}/sendMessage', json=payload)
-    if response.status_code == 200:
-        print("Сообщение успешно отправлено пользователю.")
-    else:
-        print("Ошибка при отправке сообщения:", response.status_code)
 
 @app.route('/vk', methods=['POST'])
 def save_user_vk():
@@ -132,7 +136,7 @@ def handle_get_chats():
 
 def get_chats():
     res_data = dbmanager.get_chats()
-    emit('get_chats_response', res_data)
+    emit('get_chats_response', res_data, namespace='/')
 
 @socketio.on('get_chat_messages')
 def handle_get_chat_messages(chat_source, chat_id):
@@ -155,6 +159,7 @@ def handle_send_message(chat_source, chat_id, message):
 @socketio.on('close_chat')
 def handle_close_chat(chat_source, chat_id):
     dbmanager.change_status(chat_source, chat_id, 'closed')
+    get_chats()
 
 processes = []
 
@@ -176,5 +181,7 @@ def handle_run_bots(tg_token, vk_token, email_address, email_password):
         processes.append(subprocess.Popen(['python', 'GmailBot.py', EMAIL_ADDRESS, APP_PASSWORD, URL]))
 
 if __name__ == '__main__':
+    if not os.path.exists("images"):
+        os.makedirs("images")
     dbmanager.create_db()
     socketio.run(app, host=HOST, port=int(PORT))
