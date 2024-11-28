@@ -81,7 +81,7 @@
                     <uc:ChatWindow x:Name="ChatWindow" Visibility="Collapsed"/>
                     <uc:Setting x:Name="SettingWindow" Visibility="Collapsed"/>
                     <Border>
-                        <StackPanel VerticalAlignment="Top" Name="ProfilPlace" Margin="560, 10, 0, 0">
+                        <StackPanel VerticalAlignment="Top" Name="ProfilPlace" Margin="560,10,40,0">
                         </StackPanel>
                     </Border>
 

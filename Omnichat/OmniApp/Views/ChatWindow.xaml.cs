@@ -157,6 +157,7 @@ namespace OmniApp
         private void CloseStatusButton_Click(object sender, RoutedEventArgs e)
         {
             ServerConnection.Client.EmitAsync("close_chat", chat.Source, chat.Chat_id);
+            LoadMessages();
         }
     }
 }

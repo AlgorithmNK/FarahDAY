@@ -1,4 +1,4 @@
-﻿<Window x:Class="OmniApp.Authorization"
+<Window x:Class="OmniApp.Authorization"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -25,19 +25,19 @@
                     <ColumnDefinition Width="503*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition/>
                     <RowDefinition Height="120"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="2" Grid.ColumnSpan="3" Background="White">
-                    <Label Content="АВТОРИЗАЦИЯ" FontSize="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="345,-100,0,0"/>
+                    <Label Content="АВТОРИЗАЦИЯ" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="392,-62,0,0"/>
                 </Border>
                 <Border Grid.Row="2" Grid.ColumnSpan="3">
-                    <TextBox Name="NameTextbox" TextWrapping="Wrap"  FontSize="30" Margin="400,58,150,216" BorderBrush="#b1c1e7" Background="#d4ddf1"/>
+                    <TextBox Name="NameTextbox" TextWrapping="Wrap"  FontSize="30" Margin="400,60,150,260" BorderBrush="#b1c1e7" Background="#d4ddf1"/>
                 </Border>
                 <Border Grid.Row="2" Grid.ColumnSpan="3">
-                    <PasswordBox Name="PasswordTextbox" FontSize="30" Margin="400,116,150,158" BorderBrush="#b1c1e7" RenderTransformOrigin="0.354,0.453" Background="#d4ddf1"/>
+                    <PasswordBox Name="PasswordTextbox" FontSize="30" Margin="400,120,150,200" BorderBrush="#b1c1e7" RenderTransformOrigin="0.334,-0.55" Background="#d4ddf1"/>
                 </Border>
                 <Border Grid.Row="2" Grid.ColumnSpan="3" RenderTransformOrigin="0.502,0.543">
                     <Button Name="Button_Enter" Content="ВХОД" HorizontalAlignment="Left" Margin="517,226,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="51" Width="296" Background="#b1c1e7" BorderBrush="White" FontSize="25" RenderTransformOrigin="0.459,0.38" Click="Button_Enter_Click">
