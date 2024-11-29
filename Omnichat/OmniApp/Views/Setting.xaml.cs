@@ -41,7 +41,10 @@ namespace OmniApp
             this.Visibility = Visibility.Collapsed;
             ServerConnection.RunBots();
         }
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Collapsed;
+        }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
