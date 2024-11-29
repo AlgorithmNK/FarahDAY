@@ -78,6 +78,7 @@
                     <uc:WithoutChat x:Name="WithoutChat" Visibility="Visible"/>
                     <uc:ChatWindow x:Name="ChatWindow" Visibility="Collapsed"/>
                     <uc:Setting x:Name="SettingWindow" Visibility="Collapsed"/>
+                    <uc:Setting2 x:Name="SettingWindow2" Visibility="Collapsed"/>
                     <Border>
                         <StackPanel VerticalAlignment="Top" Name="ProfilPlace" Margin="560,10,40,0">
                         </StackPanel>
