@@ -26,7 +26,7 @@ namespace OmniApp
 
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
