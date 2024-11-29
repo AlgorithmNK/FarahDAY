@@ -1,15 +1,35 @@
-from flask import Flask, request
+from whatsapp_chatbot_python import GreenAPIBot, Notification
 import requests
 import threading
-import os
-import sys
 
-app = Flask(__name__)
-url = os.getenv("SERVER_URL")  
+bot = GreenAPIBot("1103157136", "8c799acfe25e446090a237cfe6aa8ef4d07cb911307041e3ac")
+flag = False 
+bot_message = ""
+@bot.router.message()
+def message_handler(notification: Notification) -> None:
+    # Выводим все атрибуты для диагностики
+    #print(vars(notification))  # или dir(notification)
+    chat_id = notification.sender
+    sender_data = notification.event["senderData"]
+    user_name = sender_data["senderName"]
+    user_message = notification.message_text
+    user_data = {
+        'Имя и фамилия': user_name,
+        'Сообщение': user_message,
+        'ID чата': chat_id
+    } 
+    t = threading.Thread(target=send_data, args=(user_data,))
+    t.start()
+    with open('bot_message.txt', 'r') as f:
+                bot_message = f.read()
+                if bot_message != "":
+                    notification.answer(bot_message)
+    #print(chat_id, user_name, user_message)
 
 def send_data(user_data):
+    # Отправляем данные на сервер
     try:
-        response = requests.post(url + '/whatsapp', json=user_data)
+        response = requests.post('http://127.0.0.1:5000/whatsapp', json=user_data)
         if response.status_code == 200:
             print("Данные успешно отправлены на сервер.")
         else:
@@ -17,22 +37,7 @@ def send_data(user_data):
     except Exception as e:
         print("Не удалось отправить данные на сервер:", e)
 
-@app.route("/whatsapp", methods=["POST"])
-def whatsapp_webhook():
-    incoming_msg = request.values.get("Body", "").strip()
-    from_number = request.values.get("From", "").replace("whatsapp:", "")
-    media_url = request.values.get("MediaUrl0", None)
 
-    user_data = {
-        "Имя": request.values.get("ProfileName", "Неизвестно"),
-        "Сообщение": incoming_msg,
-        "Номер": from_number,
-        "Фото": media_url,
-    }
 
-    print("Получено сообщение:", user_data)
 
-    t = threading.Thread(target=send_data, args=(user_data,))
-    t.start()
-
-    return "OK", 200  
+bot.run_forever()
