@@ -10,7 +10,7 @@ sys.path.append('/task_classifier')
 sys.path.append('/text_generation')
 from task_classifier.task_classifier import TaskClassifier
 from text_generation.text_generator import TextGenerator
-
+from whatsapp_chatbot_python import GreenAPIBot
 
 HOST = '127.0.0.1'
 PORT = '5000'
@@ -31,7 +31,8 @@ SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
 EMAIL_ADDRESS = ''
 APP_PASSWORD = ''
-
+bot = GreenAPIBot("1103157136", "8c799acfe25e446090a237cfe6aa8ef4d07cb911307041e3ac")
+bot_message_file = 'bot_message.txt'
 
 @app.route('/images/<filename>')
 def get_image(filename):
@@ -124,6 +125,20 @@ def send_user_gmail(chat_id, text):
         server.starttls()
         server.login(EMAIL_ADDRESS, APP_PASSWORD)
         server.sendmail(EMAIL_ADDRESS, chat_id, msg.as_string())
+
+@app.route('/whatsapp', methods=['POST'])
+def save_user_whatsapp():
+    data = request.json
+    chat_source = 'whatsapp'
+    chat_id = data.get("ID чата")
+    name = data.get('Имя и фамилия')
+    message = data.get('Сообщение')
+    messageBot = "Hi"
+    # Сохраняем сообщение бота в файл
+    with open(bot_message_file, 'w') as f:
+        f.write(messageBot)
+    print("Ready")
+    return jsonify({'message': 'Данные успешно сохранены'})
 
 @socketio.on('save_user_offline')
 def handle_ave_user_offline(chat_source, chat_id, message):
