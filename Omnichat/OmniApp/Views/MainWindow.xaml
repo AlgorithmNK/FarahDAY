@@ -12,6 +12,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
+        Icon="Images/File.ico"
         SizeChanged="Window_SizeChanged">
     <Border Height="650" Width="1200" CornerRadius="20" Name="bor"
             Background="#ffffff">
