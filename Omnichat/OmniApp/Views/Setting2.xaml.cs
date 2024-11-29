@@ -18,7 +18,7 @@ namespace OmniApp
     /// <summary>
     /// Логика взаимодействия для Setting.xaml
     /// </summary>
-    public partial class Setting : UserControl
+    public partial class Setting2 : UserControl
     {
         public Setting()
         {
