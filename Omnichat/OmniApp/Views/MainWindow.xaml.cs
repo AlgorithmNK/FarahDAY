@@ -164,8 +164,8 @@ namespace OmniApp
             img.Visibility = Visibility.Visible;
             label1.Visibility = Visibility.Visible;
             label2.Visibility = Visibility.Visible;
-            label3.Visibility = Visibility.Visible;
-            label4.Visibility = Visibility.Visible;
+            //label3.Visibility = Visibility.Visible;
+            //label4.Visibility = Visibility.Visible;
         }
 
         private void HideElements()
@@ -173,8 +173,8 @@ namespace OmniApp
             img.Visibility = Visibility.Hidden;
             label1.Visibility = Visibility.Hidden;
             label2.Visibility = Visibility.Hidden;
-            label3.Visibility = Visibility.Hidden;
-            label4.Visibility = Visibility.Hidden;
+            //label3.Visibility = Visibility.Hidden;
+            //label4.Visibility = Visibility.Hidden;
         }
 
         private void ShiftElements(double offset)
