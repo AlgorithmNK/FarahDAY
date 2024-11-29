@@ -133,7 +133,7 @@ def save_user_whatsapp():
     chat_id = data.get("ID чата")
     name = data.get('Имя и фамилия')
     message = data.get('Сообщение')
-    messageBot = "Hi"
+    messageBot = textgenerator.get_response(message)
     # Сохраняем сообщение бота в файл
     with open(bot_message_file, 'w') as f:
         f.write(messageBot)
