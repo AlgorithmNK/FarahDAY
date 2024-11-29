@@ -69,8 +69,8 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Label Content="Недавние" FontSize="15" Foreground="White" Margin="-3,62,0,450" Grid.RowSpan="2" Name="label1" ></Label>
-                    <Label Content="Настройки" FontSize="15" Foreground="White" Margin="-3,32,0,440" Name="label3" Grid.Row="1"/>
+                    <Label Content="Недавние" FontSize="15" Foreground="White" Margin="8,64,-12,448" Name="label1" Grid.RowSpan="3" />
+                    <Label Content="Настройки" FontSize="15" Foreground="White" Margin="10,34,-14,438" Name="label2" Grid.Row="1" Grid.RowSpan="2"/>
                 </Grid>
                 <Grid x:Name="MainGrid" Grid.Column="2" Grid.Row="1"
                   Background="White">
@@ -90,32 +90,20 @@
                 <Grid x:Name="grid1" Grid.Column="0" Grid.Row="1" Background="#5676c0" Margin="0,0,0,-42">
 
                     <StackPanel VerticalAlignment="Top" Margin="0 50 0 0">
-                        <Button Height="50" Background="Transparent" BorderBrush="#5676c0">
-                            <TextBlock x:Name="textblock1" Text="🕓" Height="46" Width="46" Foreground="White"
-                               TextAlignment="Center"
-                               FontSize="32"
-                               Background="#5676c0"/>
-                        </Button>
-                        <Button Height="50" Background="Transparent" BorderBrush="#5676c0">
-                            <TextBlock Text="📈" Height="46" Width="46" Foreground="White"
-                               TextAlignment="Center"
-                               FontSize="32"
-                               Background="#5676c0"/>
-                        </Button>
-                        <Button Height="50" Background="Transparent" BorderBrush="#5676c0" Click="Setting_Button_Click">
-                            <TextBlock Text="⚙️" Height="46" Width="46" Foreground="White"
-                               TextAlignment="Right"
-                               FontSize="32"
-                               Background="#5676c0"/>
-                        </Button>
-                        <Button Height="50" Background="Transparent" Foreground="White" BorderBrush="#5676c0">
-                            <TextBlock Text="❔" Height="46" Width="46"
-                               TextAlignment="Center"
-                               FontSize="32"
-                               Background="#5676c0"/>
-                        </Button>
+    <Button Height="50" Background="Transparent" BorderBrush="#5676c0">
+        <TextBlock x:Name="textblock1" Text="🕓" Height="46" Width="46" Foreground="White"
+           TextAlignment="Center"
+           FontSize="32"
+           Background="#5676c0" RenderTransformOrigin="0.511,-0.48"/>
+    </Button>
+    <Button Height="50" Background="Transparent" BorderBrush="#5676c0" Click="Setting_Button_Click">
+        <TextBlock Text="⚙️" Height="46" Width="46" Foreground="White"
+           TextAlignment="Right"
+           FontSize="32"
+           Background="#5676c0" RenderTransformOrigin="0.561,-0.648"/>
+    </Button>
 
-                    </StackPanel>
+</StackPanel>
                 </Grid>
                 <Button Grid.Column="2" HorizontalAlignment="Left" Margin="826,3,0,0" VerticalAlignment="Top" Width="28" Background="White" Height="28" BorderBrush="White" Name="CloseButton" Click="CloseButton_Click">
                     <Image Source="/Assets/Images/Close.png" Height="25" Width="25"/>
