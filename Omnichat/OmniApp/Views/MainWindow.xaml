@@ -70,9 +70,7 @@
                         </Image.RenderTransform>
                     </Image>
                     <Label Content="Недавние" FontSize="15" Foreground="White" Margin="-3,62,0,450" Grid.RowSpan="2" Name="label1" ></Label>
-                    <Label Content="Статистика" FontSize="15" Foreground="White" Margin="-3,110,0,430" Grid.RowSpan="2" Name="label2" ></Label>
-                    <Label Content="Настройки" FontSize="15" Foreground="White" Margin="-3,160,0,390" Grid.RowSpan="2" Name="label3"></Label>
-                    <Label Content="Помощь" FontSize="15" Foreground="White" Margin="-3,210,0,320" Grid.RowSpan="2" Name="label4" ></Label>
+                    <Label Content="Настройки" FontSize="15" Foreground="White" Margin="-3,32,0,440" Name="label3" Grid.Row="1"/>
                 </Grid>
                 <Grid x:Name="MainGrid" Grid.Column="2" Grid.Row="1"
                   Background="White">
