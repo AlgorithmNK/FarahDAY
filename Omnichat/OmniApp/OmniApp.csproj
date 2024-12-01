@@ -119,6 +119,9 @@
     <Compile Include="Views\Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Setting2.xaml.cs">
+      <DependentUpon>Setting2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserAccount.xaml.cs">
       <DependentUpon>UserAccount.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Setting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Setting2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -227,20 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\cancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Views\Images\ButtonSend.png" />
-    <Resource Include="Views\Images\cancel.png" />
-    <Resource Include="Views\Images\Circle Blue.png" />
-    <Resource Include="Views\Images\Close.png" />
-    <Resource Include="Views\Images\Close2.png" />
-    <Resource Include="Views\Images\file.ico" />
-    <Resource Include="Views\Images\File.png" />
-    <Resource Include="Views\Images\Fon.png" />
-    <Resource Include="Views\Images\ForProfil.png" />
-    <Resource Include="Views\Images\Messages.png" />
-    <Resource Include="Views\Images\Picture.png" />
-    <Resource Include="Views\Images\Скрепка.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Close.png" />

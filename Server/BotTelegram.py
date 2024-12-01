@@ -1,7 +1,7 @@
+import sys
 import telebot
 import requests
 import threading
-import sys
 
 bot = telebot.TeleBot(sys.argv[1])
 url = sys.argv[2]

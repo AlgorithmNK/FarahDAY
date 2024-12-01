@@ -160,3 +160,5 @@ D:\Workspace\pfd\FarahDAY\Omnichat\OmniApp\obj\Debug\Views\UserAccount.baml
 D:\Workspace\pfd\FarahDAY\Omnichat\OmniApp\obj\Debug\Views\WithoutChat.baml
 D:\Workspace\pfd\FarahDAY\Omnichat\OmniApp\obj\Debug\Views\Authorization.g.cs
 D:\Workspace\pfd\FarahDAY\Omnichat\OmniApp\obj\Debug\Views\Authorization.baml
+D:\Workspace\pfd\FarahDAY\Omnichat\OmniApp\obj\Debug\Views\Setting2.g.cs
+D:\Workspace\pfd\FarahDAY\Omnichat\OmniApp\obj\Debug\Views\Setting2.baml

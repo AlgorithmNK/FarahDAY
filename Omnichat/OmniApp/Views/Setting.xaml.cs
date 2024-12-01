@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace OmniApp
 {
-    /// <summary>
-    /// Логика взаимодействия для Setting.xaml
-    /// </summary>
     public partial class Setting : UserControl
     {
         public Setting()
@@ -29,7 +26,7 @@ namespace OmniApp
             TextBoxMailAddress.Text = Properties.Settings.Default.MailAddress;
             PasswordBoxMailPassword.Password = Properties.Settings.Default.MailPassword;
         }
-
+        public event EventHandler CloseSettingRequested;
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.ServerUrl = TextBoxUrl.Text;
@@ -38,16 +35,14 @@ namespace OmniApp
             Properties.Settings.Default.MailAddress = TextBoxMailAddress.Text;
             Properties.Settings.Default.MailPassword = PasswordBoxMailPassword.Password;
             Properties.Settings.Default.Save();
-            this.Visibility = Visibility.Collapsed;
             ServerConnection.RunBots();
+            CloseSettingRequested?.Invoke(this, EventArgs.Empty);
+
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public event EventHandler ToRightSettingRequested;
+        private void ToRightButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Visibility = Visibility.Collapsed;
-        }
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
+            ToRightSettingRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

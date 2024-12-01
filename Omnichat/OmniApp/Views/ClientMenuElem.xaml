@@ -10,7 +10,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <Border Background="#b1c1e7" Height="40" Width="250" VerticalAlignment="Top" Name="bord">
+        <Border Background="#5676c0" Height="40" Width="250" VerticalAlignment="Top" Name="bord">
             <Grid Margin="6,-3,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>

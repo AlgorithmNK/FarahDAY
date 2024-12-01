@@ -15,26 +15,34 @@ using System.Windows.Shapes;
 
 namespace OmniApp
 {
-    /// <summary>
-    /// Логика взаимодействия для Setting.xaml
-    /// </summary>
     public partial class Setting2 : UserControl
     {
-        public Setting()
+        public Setting2()
         {
             InitializeComponent();
+            TextBoxWhatsAppId.Text = Properties.Settings.Default.WhatsAppId;
+            PasswordBoxWhatsAppToken.Password = Properties.Settings.Default.WhatsAppToken;
+            CheckBoxGenerateAnswer.IsChecked = Properties.Settings.Default.GenerateAnswer;
+            CheckBoxDetectTheme.IsChecked = Properties.Settings.Default.DetectTheme;
 
         }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        public event EventHandler CloseSettingRequested;
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            Properties.Settings.Default.WhatsAppId = TextBoxWhatsAppId.Text;
+            Properties.Settings.Default.WhatsAppToken = PasswordBoxWhatsAppToken.Password;
+            Properties.Settings.Default.GenerateAnswer = CheckBoxGenerateAnswer.IsChecked.Value;
+            Properties.Settings.Default.DetectTheme = CheckBoxDetectTheme.IsChecked.Value;
+            Properties.Settings.Default.Save();
+            ServerConnection.RunBots();
+            CloseSettingRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public event EventHandler ToLeftSettingRequested;
+
+        private void ToLeftButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Visibility = Visibility.Collapsed;
-        
+            ToLeftSettingRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

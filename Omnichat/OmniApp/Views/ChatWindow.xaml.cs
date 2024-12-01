@@ -24,9 +24,6 @@ using Newtonsoft.Json;
 
 namespace OmniApp
 {
-    /// <summary>
-    /// Логика взаимодействия для ChatWindow.xaml
-    /// </summary>
     public partial class ChatWindow : UserControl
     {
         private bool isOpen = false;
@@ -157,6 +154,7 @@ namespace OmniApp
         private void CloseStatusButton_Click(object sender, RoutedEventArgs e)
         {
             ServerConnection.Client.EmitAsync("close_chat", chat.Source, chat.Chat_id);
+            MessageBox.Show("Запрос успешно закрыт", "Закрытие", MessageBoxButton.OK, MessageBoxImage.Information);
             LoadMessages();
         }
     }

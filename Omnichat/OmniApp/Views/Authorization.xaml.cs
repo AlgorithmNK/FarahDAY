@@ -14,14 +14,18 @@ using System.Windows.Shapes;
 
 namespace OmniApp
 {
-    /// <summary>
-    /// Логика взаимодействия для Authorization.xaml
-    /// </summary>
     public partial class Authorization : Window
     {
         public Authorization()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.RememberUser == true)
+            {
+                UrlTextbox.Text = Properties.Settings.Default.ServerUrl;
+                NameTextbox.Text = Properties.Settings.Default.UserName;
+                PasswordTextbox.Password = Properties.Settings.Default.UserPassword;
+                CheckBoxRememberUser.IsChecked = Properties.Settings.Default.RememberUser;
+            }
         }
         MainWindow mainWindow;
         private void Button_Enter_Click(object sender, RoutedEventArgs e)
@@ -38,11 +42,15 @@ namespace OmniApp
        
         private void CheckUser()
         {
-            //проверка наличия пользователя в системе. В данный момент переменные user и password используются для создания реакции приложения в случае неверности данных
-            string user = "d"; 
-            string password = "1";
+            string user = "user"; 
+            string password = "123";
             if (NameTextbox.Text == user && PasswordTextbox.Password == password) 
             {
+                Properties.Settings.Default.ServerUrl = UrlTextbox.Text;
+                Properties.Settings.Default.UserName = NameTextbox.Text;
+                Properties.Settings.Default.UserPassword = PasswordTextbox.Password;
+                Properties.Settings.Default.RememberUser = CheckBoxRememberUser.IsChecked.Value;
+                Properties.Settings.Default.Save();
                 mainWindow = new MainWindow(NameTextbox.Text);
                 mainWindow.Show();
                 this.Close();

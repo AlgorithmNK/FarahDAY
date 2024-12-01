@@ -80,22 +80,22 @@
 
                 </ListBox>
             </ScrollViewer>
+            <Label Visibility="Collapsed" Content="Токен Viber" HorizontalAlignment="Left" Margin="20,39,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="20"/>
+            <TextBox Visibility="Collapsed" x:Name="TextBoxViber" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Background="#d4ddf1" FontSize="20" Margin="185,45,75,0" Grid.Row="2" BorderBrush="White"/>
 
+            <Label Content="WhatsApp (GREEN-API)" HorizontalAlignment="Left" Margin="333,0,0,266" Grid.Row="2" VerticalAlignment="Bottom" FontSize="20" Width="238"/>
 
+            <Label Content="id" HorizontalAlignment="Left" Margin="17,69,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="20"/>
+            <TextBox x:Name="TextBoxWhatsAppId" VerticalAlignment="Top" Background="#d4ddf1" FontSize="20" Margin="182,69,78,0" Grid.Row="2" BorderBrush="White"/>
 
-
-            <Label Content="Токен Viber" HorizontalAlignment="Left" Margin="20,39,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="20"/>
-            <TextBox x:Name="TextBoxViber" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Background="#d4ddf1" FontSize="20" Margin="185,45,75,0" Grid.Row="2" BorderBrush="White"/>
-
-            <Label Content="GREEN-API" HorizontalAlignment="Left" Margin="359,0,0,190" Grid.Row="2" VerticalAlignment="Bottom" FontSize="20" Width="143"/>
-
-            <Label Content="idInstance" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20"/>
-            <PasswordBox x:Name="TextIdInstance" VerticalAlignment="Bottom" Background="#d4ddf1" FontSize="20" Margin="185,0,75,147" Grid.Row="2" BorderBrush="White"/>
-
-            <Label Content="apiTokenInstance" HorizontalAlignment="Left" Margin="20,0,0,69" Grid.Row="2" VerticalAlignment="Bottom" FontSize="20" Height="45" Width="160"/>
-            <TextBox x:Name="apiTokenInstance" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" Background="#d4ddf1" FontSize="20" Margin="185,0,75,79" Grid.Row="2" BorderBrush="White"/>
+            <Label Content="Токен" HorizontalAlignment="Left" Margin="17,0,0,179" Grid.Row="2" VerticalAlignment="Bottom" FontSize="20" Height="45" Width="160"/>
+            <PasswordBox x:Name="PasswordBoxWhatsAppToken" VerticalAlignment="Bottom" Background="#d4ddf1" FontSize="20" Margin="182,0,78,187" Grid.Row="2" BorderBrush="White"/>
             <Button Click="SaveButton_Click" Content="Сохранить" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="40" Width="204" Background="White" FontSize="20" BorderBrush="White"/>
-            <Button Content="←" HorizontalAlignment="Left" Margin="226,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="40" Width="38" FontSize="20" BorderBrush="#b1c1e7" Background="White"/>
+            <Button Click="ToLeftButton_Click" Content="←" HorizontalAlignment="Left" Margin="226,0,0,0" Grid.Row="3" VerticalAlignment="Center" Height="40" Width="38" FontSize="20" BorderBrush="#b1c1e7" Background="White"/>
+            <Label Content="Определять тему" HorizontalAlignment="Left" Margin="17,0,0,120" Grid.Row="2" VerticalAlignment="Bottom" FontSize="20" Height="45" Width="172"/>
+            <Label Content="Генерировать ответ" HorizontalAlignment="Left" Margin="17,0,0,75" Grid.Row="2" VerticalAlignment="Bottom" FontSize="20" Height="45" Width="197"/>
+            <CheckBox x:Name="CheckBoxGenerateAnswer" Grid.Row="2" Margin="215,180,569,136" RenderTransformOrigin="0.5,-0.423"/>
+            <CheckBox x:Name="CheckBoxDetectTheme" Grid.Row="2" Margin="214,223,571,88"/>
         </Grid>
     </Border>
 </UserControl>

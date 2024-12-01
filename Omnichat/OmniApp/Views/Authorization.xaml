@@ -18,7 +18,7 @@
         Name="Win">
     <Border Background="White" CornerRadius="40" Name="bor" Width="1000" Height="650">
         <Viewbox>
-            <Grid Height="556" Width="1000" VerticalAlignment="Center" Background="#b1c1e7">
+            <Grid Height="650" Width="1000" VerticalAlignment="Center" Background="#b1c1e7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="195*"/>
                     <ColumnDefinition Width="502*"/>
@@ -34,13 +34,16 @@
                     <Label Content="АВТОРИЗАЦИЯ" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="392,-62,0,0"/>
                 </Border>
                 <Border Grid.Row="2" Grid.ColumnSpan="3">
-                    <TextBox Name="NameTextbox" TextWrapping="Wrap"  FontSize="30" Margin="400,60,150,260" BorderBrush="#b1c1e7" Background="#d4ddf1"/>
+                    <TextBox Name="UrlTextbox" TextWrapping="Wrap"  FontSize="30" Margin="400,68,150,344" BorderBrush="#b1c1e7" Background="#d4ddf1"/>
                 </Border>
                 <Border Grid.Row="2" Grid.ColumnSpan="3">
-                    <PasswordBox Name="PasswordTextbox" FontSize="30" Margin="400,120,150,200" BorderBrush="#b1c1e7" RenderTransformOrigin="0.334,-0.55" Background="#d4ddf1"/>
+                    <TextBox Name="NameTextbox" TextWrapping="Wrap"  FontSize="30" Margin="400,130,150,282" BorderBrush="#b1c1e7" Background="#d4ddf1"/>
+                </Border>
+                <Border Grid.Row="2" Grid.ColumnSpan="3">
+                    <PasswordBox Name="PasswordTextbox" FontSize="30" Margin="400,187,150,225" BorderBrush="#b1c1e7" RenderTransformOrigin="0.334,-0.55" Background="#d4ddf1"/>
                 </Border>
                 <Border Grid.Row="2" Grid.ColumnSpan="3" RenderTransformOrigin="0.502,0.543">
-                    <Button Name="Button_Enter" Content="ВХОД" HorizontalAlignment="Left" Margin="517,226,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="51" Width="296" Background="#b1c1e7" BorderBrush="White" FontSize="25" RenderTransformOrigin="0.459,0.38" Click="Button_Enter_Click">
+                    <Button Name="Button_Enter" Content="ВХОД" HorizontalAlignment="Left" Margin="474,272,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="52" Width="296" Background="#b1c1e7" BorderBrush="White" FontSize="25" RenderTransformOrigin="0.459,0.38" Click="Button_Enter_Click">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="6"/>
@@ -61,17 +64,18 @@
                     </Rectangle>
 
                 </Button>
-                <Label Content="Имя пользователя:" HorizontalAlignment="Left" Margin="-20,56,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="1" FontSize="25"/>
-                <Label Content="Пароль:" HorizontalAlignment="Left" Margin="106,115,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="1" FontSize="25"/>
+                <Label Content="Имя пользователя:" HorizontalAlignment="Left" Margin="145,126,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="25" Grid.ColumnSpan="2"/>
+                <Label Content="Пароль:" HorizontalAlignment="Left" Margin="108,185,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="1" FontSize="25"/>
                 <Label Name="ErrorText"  Content="Неверное имя пользователя или пароль" HorizontalAlignment="Left" Margin="232,158,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="1" FontSize="20" Grid.ColumnSpan="2" Width="522" Foreground="Red" Visibility="Hidden"/>
-                <Button Content="Регистрация" HorizontalAlignment="Left" Margin="276,10,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.Column="1" Width="143" Grid.ColumnSpan="2" FontSize="20" Background="#b1c1e7" BorderBrush="#b1c1e7"/>
-                <Button Content="Забыли пароль?" HorizontalAlignment="Left" Margin="256,0,0,0" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" Width="188" Grid.ColumnSpan="2" FontSize="20" Background="#b1c1e7" BorderBrush="#b1c1e7"/>
-                <CheckBox Content="Запомнить" HorizontalAlignment="Left" Margin="154,235,0,0" Grid.Row="2" VerticalAlignment="Top" Height="16" FontSize="10" Grid.Column="1" BorderBrush="#b1c1e7" RenderTransformOrigin="0.257,0.4" Width="78">
+                <Button Visibility="Hidden" Content="Регистрация" HorizontalAlignment="Left" Margin="276,10,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.Column="1" Width="143" Grid.ColumnSpan="2" FontSize="20" Background="#b1c1e7" BorderBrush="#b1c1e7"/>
+                <Button Visibility="Hidden" Content="Забыли пароль?" HorizontalAlignment="Left" Margin="256,0,0,0" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" Width="188" Grid.ColumnSpan="2" FontSize="20" Background="#b1c1e7" BorderBrush="#b1c1e7"/>
+                <CheckBox x:Name="CheckBoxRememberUser" Content="Запомнить" HorizontalAlignment="Left" Margin="108,277,0,0" Grid.Row="2" VerticalAlignment="Top" Height="16" FontSize="10" Grid.Column="1" BorderBrush="#b1c1e7" RenderTransformOrigin="0.257,0.4" Width="78">
                     <CheckBox.LayoutTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />
                     </CheckBox.LayoutTransform>
 
                 </CheckBox>
+                <Label Content="URL сервера:" HorizontalAlignment="Left" Margin="50,63,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="25" Grid.Column="1"/>
             </Grid>
         </Viewbox>
     </Border>

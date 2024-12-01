@@ -1,14 +1,14 @@
 from whatsapp_chatbot_python import GreenAPIBot, Notification
 import requests
 import threading
+import sys
 
-bot = GreenAPIBot("1103157136", "8c799acfe25e446090a237cfe6aa8ef4d07cb911307041e3ac")
+bot = GreenAPIBot(sys.argv[1], sys.argv[2])
+url = sys.argv[3]
 flag = False 
 bot_message = ""
 @bot.router.message()
 def message_handler(notification: Notification) -> None:
-    # Выводим все атрибуты для диагностики
-    #print(vars(notification))  # или dir(notification)
     chat_id = notification.sender
     sender_data = notification.event["senderData"]
     user_name = sender_data["senderName"]
@@ -20,16 +20,14 @@ def message_handler(notification: Notification) -> None:
     } 
     t = threading.Thread(target=send_data, args=(user_data,))
     t.start()
-    with open('bot_message.txt', 'r') as f:
+    """with open('bot_message.txt', 'r') as f:
                 bot_message = f.read()
                 if bot_message != "":
-                    notification.answer(bot_message)
-    #print(chat_id, user_name, user_message)
+                    notification.answer(bot_message)"""
 
 def send_data(user_data):
-    # Отправляем данные на сервер
     try:
-        response = requests.post('http://127.0.0.1:5000/whatsapp', json=user_data)
+        response = requests.post(url + '/whatsapp', json=user_data)
         if response.status_code == 200:
             print("Данные успешно отправлены на сервер.")
         else:

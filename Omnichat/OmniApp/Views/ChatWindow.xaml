@@ -42,7 +42,7 @@
                         Background="#d4ddf1"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch">
-                <TextBlock x:Name="ChatName" Text="Имя пользователя(клиента)"
+                <TextBlock x:Name="ChatName" Text="Имя пользователя (клиента)"
                            FontSize="20"
                            HorizontalAlignment="Center"
                            Margin="35, 5, 10, 10"
@@ -74,9 +74,10 @@
                              BorderThickness="0" />
                                 </Border>
                                 <Image Source="{Binding Photo}" 
-                       HorizontalAlignment="Center" 
-                       MaxWidth="700"
-                       Stretch="Uniform" />
+                                       HorizontalAlignment="Center" 
+                                       MaxWidth="300"
+                                       MaxHeight="300"
+                                       Stretch="Uniform" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -119,12 +120,12 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Button.RenderTransform>
-                    <Image Source="Images/ButtonSend.png"/>
+                    <Image Source="/Assets/Images/ButtonSend.png"/>
                 </Button>
             </Border>
             <Button x:Name="btn2" Content="Изображение" HorizontalAlignment="Left" Margin="10,346,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="19"/>
 
-            <Button x:Name="btn1" Content="Файл" HorizontalAlignment="Left" Margin="77,250,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="20"/>
+            <Button x:Name="btn1" Content="Файл" HorizontalAlignment="Left" Margin="10,326,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Opacity="0.5" Background="Black" Foreground="White" FontSize="10" Height="20"/>
             <Image x:Name="img1" Source="/Assets/Images/File.png" Width="15" Height="20" Margin="40,250,732,60" Grid.Row="2" />
             <Image x:Name="img2" Source="/Assets/Images/Picture.png" Width="15" Height="20" Margin="46,271,738,42" Grid.Row="2"/>
         </Grid>

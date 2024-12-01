@@ -13,9 +13,9 @@ class TextGenerator:
         if llama_path is None:
             llama_path = os.path.join(self.dir_path, "llamacpp/llama-cli.exe")
         if model_path is None:
-            model_path = os.path.join(self.dir_path, "models/model.gguf")
+            model_path = os.path.join(self.dir_path, "models/openchat_3.5.gguf")
         if prompt_path is None:
-            prompt_path = os.path.join(self.dir_path, "prompts/default.txt")
+            prompt_path = os.path.join(self.dir_path, "prompts/open_chat.txt")
         with open(prompt_path, 'r', encoding='utf-8') as file:
             file_content = file.read()
         prompt = file_content.replace('{prompt}', text)
@@ -28,14 +28,15 @@ class TextGenerator:
             "--file", prompt_file_name,
             "-n", "200"
         ]
-        res_text = "### Response: Здравствуйте. Благодарим за обращение. Ваш запрос переден в службу поддержки. [end of text]"
+        res_text = "GPT4 Correct Assistant: Здравствуйте. Благодарим за обращение. Ваш запрос переден в службу поддержки.<|end_of_turn|>"
         try:
             res_text = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8').stdout
         except Exception as e:
             print(f"Ошибка генерации: {e}")
+        #print(res_text)
         os.remove(prompt_file_name)
-        start = res_text.find('### Response:') + len('### Response:')
-        end = res_text.find('[end of text]')
+        start = res_text.find('GPT4 Correct Assistant:') + len('GPT4 Correct Assistant:')
+        end = res_text.find('<|end_of_turn|> [end of text]')
         result = res_text[start:end].strip()
         return result
 

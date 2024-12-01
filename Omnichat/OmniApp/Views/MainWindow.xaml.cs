@@ -35,12 +35,16 @@ namespace OmniApp
         public MainWindow(string userName)
         {
             InitializeComponent();
-            CreateMenuElements();
+            //CreateMenuElements();
             UserAccount user = new UserAccount(userName);
             user.UserName = userName;
             this.Loaded += OnWindowLoaded;
             ProfilPlace.Children.Add(user);
             HideElements();
+            SettingWindow.ToRightSettingRequested += OnToRightSettingRequested;
+            SettingWindow.CloseSettingRequested += OnCloseSettingRequested;
+            SettingWindow2.ToLeftSettingRequested += OnToLeftSettingRequested;
+            SettingWindow2.CloseSettingRequested += OnCloseSettingRequested;
         }
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
@@ -198,8 +202,10 @@ namespace OmniApp
         }
         private void Setting_Button_Click(object sender, RoutedEventArgs e)
         {
-            SettingWindow.Visibility = Visibility.Visible;
+            WithoutChat.Visibility = Visibility.Collapsed;
             ChatWindow.Visibility = Visibility.Collapsed;
+            SettingWindow.Visibility = Visibility.Visible;
+            SettingWindow2.Visibility = Visibility.Collapsed;
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
@@ -243,7 +249,27 @@ namespace OmniApp
             Application app = Application.Current;
             app.Shutdown();
         }
+        private void OnToRightSettingRequested(object sender, EventArgs e)
+        {
+            WithoutChat.Visibility = Visibility.Collapsed;
+            ChatWindow.Visibility = Visibility.Collapsed;
+            SettingWindow.Visibility = Visibility.Collapsed;
+            SettingWindow2.Visibility = Visibility.Visible;
+        }
+        private void OnToLeftSettingRequested(object sender, EventArgs e)
+        {
+            WithoutChat.Visibility = Visibility.Collapsed;
+            ChatWindow.Visibility = Visibility.Collapsed;
+            SettingWindow.Visibility = Visibility.Visible;
+            SettingWindow2.Visibility = Visibility.Collapsed;
+        }
 
-
+        private void OnCloseSettingRequested(object sender, EventArgs e)
+        {
+            WithoutChat.Visibility = Visibility.Visible;
+            ChatWindow.Visibility = Visibility.Collapsed;
+            SettingWindow.Visibility = Visibility.Collapsed;
+            SettingWindow2.Visibility = Visibility.Collapsed;
+        }
     }
 }
