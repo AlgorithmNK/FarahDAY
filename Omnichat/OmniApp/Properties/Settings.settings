@@ -3,40 +3,40 @@
   <Profiles />
   <Settings>
     <Setting Name="ServerUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">http://127.0.0.1:5000</Value>
     </Setting>
     <Setting Name="TgToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="VkToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="MailAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="MailPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="WhatsAppId" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="WhatsAppToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="ViberToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="GenerateAnswer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DetectTheme" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UserName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">user</Value>
     </Setting>
     <Setting Name="UserPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">123</Value>
     </Setting>
     <Setting Name="RememberUser" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
